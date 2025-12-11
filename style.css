@@ -1,0 +1,232 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+
+main {
+    min-height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(to top left, #868686, #f8f8f8);
+}
+
+h1 {
+    margin: 20px;
+    padding: 10px;
+    background-color: black;
+    color: #b17d49;
+    text-align: center;
+    border-radius: 10px;
+}
+
+h2{
+    padding: 10px;
+    margin: 5px;
+}
+
+section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    margin: 20px;
+    padding: 20px;
+    border: 1px solid black;
+    border-radius: 10px;
+}
+
+form,
+#summery {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    margin: 20px 20px 50px 20px;
+
+    & div {
+        width: 180px;
+        height: 200px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        background-color: #b17d49;
+        border-radius: 10px;
+        margin: 10px;
+        padding: 20px;
+        gap: 10%;
+
+        & p, h2{
+            font-size: 18px;
+            font-weight: 700;
+            color: white;
+        }
+
+        & input {
+            width: 170px;
+            border-style: none;
+            outline-style: none;
+            padding: 5px;
+            border-radius: 5px;
+        }
+
+        & label {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        & .fa-user {
+            width: 120px;
+            height: 120px;
+            font-size: 80px;
+            background-color: rgb(216, 216, 216);
+            color: rgb(77, 77, 77);
+            border-radius: 50%;
+            padding: 10px;
+        }
+    }
+}
+
+section>button,
+#btn>button {
+    min-width: 200px;
+    background-color: black;
+    color: #b17d49;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin: 10px;
+}
+
+section>button:hover,
+#btn>button:hover {
+    background-color: #202020;
+}
+
+#input-error-msg,
+.error-msg {
+    display: none;
+    color: red;
+    padding: 10px;
+}
+
+#category-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    padding: 10px;
+    margin: 10px;
+}
+
+.option {
+    padding: 15px;
+    margin: 20px 20px 10px 20px;
+    border-radius: 5px;
+    background-color: #b17d49;
+    color: black;
+    border-style: none;
+    text-align: center;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.option:hover {
+    background-color: #8f6d4c;
+}
+
+#score-turn-level {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    padding: 10px;
+    margin: 10px;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.card {
+    background-color: #d1baa3;
+    box-shadow: #fafafa40 0px 30px 60px -12px inset, #ffffff7c 0px 18px 36px -18px inset;
+    margin: 10px;
+    text-align: center;
+    border-radius: 10px;
+    padding: 10px;
+    min-width: 200px;
+}
+
+#show-result {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    padding: 10px;
+    margin: 20px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+
+#question-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+
+    & h2 {
+        margin: 20px 10px;
+    }
+}
+
+.options {
+    width: calc(40% - 40px);
+    padding: 15px;
+    background-color: #442b2b6e;
+    color: white;
+    border-radius: 10px;
+    border-style: none;
+    margin: 10px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.options:hover {
+    background-color: #6363636e;
+}
+
+@media (max-width: 900px) {
+
+    #category-container {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    #score-turn-level {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+}
+
+@media (max-width: 768px) {
+
+    #category-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    #score-turn-level {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 425px) {
+    #category-container {
+        grid-template-columns: repeat(1, 1fr);
+        width: 100%;
+    }
+
+    #score-turn-level {
+        grid-template-columns: repeat(1, 1fr);
+    }
+}
