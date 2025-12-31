@@ -163,6 +163,10 @@ async function showQuestion(question) {
     const optBtns = document.getElementsByClassName("options");
     const nextBtn = document.getElementById("next-btn");
 
+    if (questionIndex === (questionsList.length - 1)) {
+        nextBtn.parentNode.removeChild(nextBtn);
+    }
+
     for (let i = 0; i < optBtns.length; i++) {
 
         optBtns[i].style.backgroundColor = " #442b2b6e";
@@ -197,7 +201,12 @@ async function showQuestion(question) {
                 correctAnswerOption.style.backgroundColor = "#80f364ff";
             }
 
-            nextBtn.disabled = false;
+            if (questionIndex === (questionsList.length - 1)) {
+                section.innerHTML = "Loading...";
+                showSummery();
+            } else {
+                nextBtn.disabled = false;
+            }
 
             for (let j = 0; j < optBtns.length; j++) {
                 optBtns[j].disabled = true;
@@ -218,12 +227,7 @@ async function showQuestion(question) {
             firstPlayer.turn = true;
         }
 
-        if (questionIndex < questionsList.length) {
-            showQuestion(questionsList[questionIndex]);
-        } else {
-            section.innerHTML = "Loading...";
-            showSummery();
-        }
+        showQuestion(questionsList[questionIndex]);
 
     });
 }
