@@ -4,6 +4,7 @@ let firstPlayer = { id: "first-player-score", name: null, score: 0, turn: true }
 let secondPlayer = { id: "second-player-score", name: null, score: 0, turn: false };
 
 let categories;
+let roundNumber = 0;
 let selectedCategories = [];
 let selectedCategory;
 let questionsList = [];
@@ -54,12 +55,12 @@ function showCategory(data) {
 
     for (let categoryName in data) {
 
-        const button = document.createElement("button");
-        button.innerText = categoryName;
-        button.classList.add("option");
-        button.setAttribute("data-category", data[categoryName][0]);
-
         if (!selectedCategories.includes(categoryName)) {
+            const button = document.createElement("button");
+            button.innerText = categoryName;
+            button.classList.add("option");
+            button.setAttribute("data-category", data[categoryName][0]);
+
             button.addEventListener("click", () => {
                 if (selectedCategory) {
                     selectedCategory.style.backgroundColor = "#b17d49";
@@ -68,15 +69,11 @@ function showCategory(data) {
                 selectedCategory = button;
                 selectedCategory.style.backgroundColor = "#9c9c9cff";
                 playButton.disabled = false;
-                
+
             });
 
-        } else {
-            button.disabled = true;
-            button.style.backgroundColor = "#9c9c9cff";
+            categoryContainer.appendChild(button);
         }
-
-        categoryContainer.appendChild(button);
     }
 
     const playButton = document.createElement("button");
@@ -103,7 +100,8 @@ function showCategory(data) {
     });
 
     // remove content from the section 
-    section.innerHTML = "<h2>Select a Category Below:</h2>";
+    section.innerHTML = `<h2>Round: ${roundNumber += 1}</h2>
+    <h2>Select a Category Below:</h2>`;
 
     // Append category container containing categories and Play button to start the Game.
     section.appendChild(categoryContainer);
@@ -126,12 +124,12 @@ async function showQuestion(question) {
 
     section.innerHTML = `<div id="score-turn-level">
                 <div class="card">
-                    <p>${firstPlayer.name}</p>
-                    <p  id="first-player-score" >Score: ${firstPlayer.score}</p>
+                    <p>Round:</p>
+                    <p>${roundNumber}</p>
                 </div>
                 <div class="card">
-                    <p>${secondPlayer.name}</p>
-                    <p id="second-player-score">Score: ${secondPlayer.score}</p>
+                    <p>Category:</p>
+                    <p>${selectedCategories[selectedCategories.length-1]}</p>
                 </div>
                 <div class="card">
                     <p>Difficulty:</p>
@@ -141,6 +139,15 @@ async function showQuestion(question) {
                     <p>Turn:</p>
                     <p>${firstPlayer.turn ? firstPlayer.name : secondPlayer.name}</p>
                 </div>
+                <div class="card">
+                    <p>${firstPlayer.name}'s</p>
+                    <p  id="first-player-score" >Score: ${firstPlayer.score}</p>
+                </div>
+                <div class="card">
+                    <p>${secondPlayer.name}'s</p>
+                    <p id="second-player-score">Score: ${secondPlayer.score}</p>
+                </div>
+                
             </div>
             <div id="question-container">
 
@@ -193,7 +200,7 @@ async function showQuestion(question) {
 
             nextBtn.disabled = false;
 
-            for(let j = 0; j < optBtns.length; j++){
+            for (let j = 0; j < optBtns.length; j++) {
                 optBtns[j].disabled = true;
             }
 
@@ -225,26 +232,15 @@ async function showQuestion(question) {
 // Shows scores and next steps
 function showSummery() {
     section.innerHTML = `
-    <p id="show-result" ></p>
-    <div id="summery">
-                <div>
-                    <i class="fa-solid fa-user"></i>
-                    <h2>${firstPlayer.name}</h2>
-                    <p>${firstPlayer.score}</p>
-                </div>
-                <div>
-                    <i class="fa-solid fa-user"></i>
-                    <h2>${secondPlayer.name}</h2>
-                    <p>${secondPlayer.score}</p>
-                </div>
-            </div>
-            <div id="btn">
-                <button id="select-category-btn">Choose another category</button>
-                <button id="select-end-btn" >End Game</button>
-            </div>
-            `
+        <p id="result"></p>
+        <div id="show-result" ></div>
+        <div id="btn">
+            <button id="select-category-btn">Next Round</button>
+            <button id="select-end-btn" >End Game</button>
+        </div>
+        `
     if (Object.keys(categories).length === selectedCategories.length) {
-        showResult();
+        document.getElementById("select-category-btn").disabled = true;
 
     } else {
         section.style.justifyContent = "flex-start";
@@ -255,18 +251,31 @@ function showSummery() {
 
         document.getElementById("select-end-btn").addEventListener("click", () => {
             showResult();
-        })
+        });
     }
 
 }
 
-// Shows wi
+// Show result
 function showResult() {
 
     const selectBtns = document.getElementById("btn");
     selectBtns.parentNode.removeChild(selectBtns);
 
-    const result = document.getElementById("show-result");
+    document.getElementById("show-result").innerHTML = `<div id="summery">
+                <div>
+                    <i class="fa-solid fa-user"></i>
+                    <h2>${firstPlayer.name}'s</h2>
+                    <p>Score: ${firstPlayer.score}</p>
+                </div>
+                <div>
+                    <i class="fa-solid fa-user"></i>
+                    <h2>${secondPlayer.name}'s</h2>
+                    <p>Score: ${secondPlayer.score}</p>
+                </div>
+                </div>`;
+
+    const result = document.querySelector("#result");
 
     if (firstPlayer.score > secondPlayer.score) {
 
@@ -308,6 +317,9 @@ document.getElementById("continue-btn").addEventListener("click", async () => {
         errorMessage.innerText = "Name must be at least 3 characters.";
         errorMessage.style.display = "block";
 
+    } else if (firstPlayer.name.toLowerCase() === secondPlayer.name.toLowerCase()) {
+        errorMessage.innerText = "Usernames must be unique. Please choose a different username.";
+        errorMessage.style.display = "block";
     } else {
 
         section.innerHTML = "Loading...";

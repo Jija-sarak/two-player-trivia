@@ -172,6 +172,9 @@ section>button:hover:not(:disabled),
     font-weight: bold;
 }
 
+#result{
+    padding: 20px;
+}
 
 #question-container {
     display: flex;
