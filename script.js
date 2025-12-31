@@ -10,7 +10,6 @@ let selectedCategory;
 let questionsList = [];
 let questionIndex = 0;
 
-
 // fetch category from api and store it in categories variable
 async function getCategory() {
     try {
@@ -78,7 +77,7 @@ function showCategory(data) {
 
     const playButton = document.createElement("button");
     playButton.setAttribute("id", "playBtn");
-    playButton.innerText = "Play";
+    playButton.innerText = "Start Round";
     playButton.disabled = true;
 
     playButton.addEventListener("click", async () => {
@@ -129,7 +128,7 @@ async function showQuestion(question) {
                 </div>
                 <div class="card">
                     <p>Category:</p>
-                    <p>${selectedCategories[selectedCategories.length-1]}</p>
+                    <p>${selectedCategories[selectedCategories.length - 1]}</p>
                 </div>
                 <div class="card">
                     <p>Difficulty:</p>
@@ -248,11 +247,11 @@ function showSummery() {
             section.innerHTML = "Loading...";
             showCategory(categories);
         });
-
-        document.getElementById("select-end-btn").addEventListener("click", () => {
-            showResult();
-        });
     }
+
+    document.getElementById("select-end-btn").addEventListener("click", () => {
+        showResult();
+    });
 
 }
 
